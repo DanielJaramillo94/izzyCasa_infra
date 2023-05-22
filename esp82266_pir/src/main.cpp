@@ -1,27 +1,22 @@
 #include <Arduino.h>
 
-
-const int ledPin =  LED_BUILTIN;
-const long interval = 1000;
-
 volatile boolean state = false; // Declare state variable as volatile
 
-int ledState = LOW; 
-unsigned long previousMillis = 0;  
+void IRAM_ATTR timerISR() {
+  state = !state;
+  digitalWrite(LED_BUILTIN, state);
+}
 
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
+
+  timer1_enable(TIM_DIV256, TIM_EDGE, TIM_LOOP);
+  timer1_write(312500); // 1 second = 312500 ticks (80 MHz / 256)
+
+  // Attach the ISR (Interrupt Service Routine) to Timer1
+  timer1_attachInterrupt(timerISR);
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
-
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-
-    ledState = (ledState == LOW) ? HIGH : LOW;
-
-    digitalWrite(ledPin, ledState);
-  }
 }
