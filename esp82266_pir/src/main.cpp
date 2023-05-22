@@ -1,13 +1,27 @@
 #include <Arduino.h>
 
+
+const int ledPin =  LED_BUILTIN;
+const long interval = 1000;
+
+volatile boolean state = false; // Declare state variable as volatile
+
+int ledState = LOW; 
+unsigned long previousMillis = 0;  
+
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
-  Serial.begin(9600); 
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+
+    ledState = (ledState == LOW) ? HIGH : LOW;
+
+    digitalWrite(ledPin, ledState);
+  }
 }
