@@ -8,19 +8,10 @@ const char* MQTT_TOPIC_NAME = "home";
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
-void OnMqttReceived(char* topic, byte* payload, unsigned int length) {
-   String content = "";   
-   for (size_t i = 0; i < length; i++) {
-      content.concat((char)payload[i]);
-   }
-   Serial.println("Received on " + String(topic) + ": " + content);
-
-   if (content.equals("ON")) {
-      digitalWrite(LED_BUILTIN, HIGH);
-     }
-   else{
-      digitalWrite(LED_BUILTIN, LOW);
-   }
+void publishMessage(const char* topic, const char* message) {
+  mqttClient.publish(topic, message);
+  Serial.print("Message published to topic: ");
+  Serial.println(topic);
 }
 
 void connect() {
@@ -40,7 +31,6 @@ void connect() {
 
 void InitMqtt() {
    mqttClient.setServer(MQTT_BROKER_ADRESS, MQTT_PORT);
-   mqttClient.setCallback(OnMqttReceived);
    connect();
 }
 

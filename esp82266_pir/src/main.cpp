@@ -20,6 +20,6 @@ void setup() {
 }
 
 void loop() {
-  checkIfTurnOffLed();
+  blinkLed();
   handleMqtt();
 }

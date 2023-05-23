@@ -1,22 +1,28 @@
-#define timeSeconds 10
 
 // Timer: Auxiliary variables
 unsigned long now;
-unsigned long lastTrigger = 0;
-bool startTimer = false;
+volatile unsigned long lastTrigger = 0;
+volatile bool startTimer = false;
+volatile int blinkCounter = 4;
+volatile int ledState = HIGH;
 
 void IRAM_ATTR detectsMovement() {
-  Serial.println("MOTION DETECTED!!!");
-  digitalWrite(led, LOW);
+  publishMessage(MQTT_TOPIC_NAME, "1");
   startTimer = true;
   lastTrigger = millis();
+  blinkCounter = 4;
+  ledState = LOW;
 }
 
-void IRAM_ATTR checkIfTurnOffLed() {
+void blinkLed() {
   now = millis();
-  if(startTimer && (now - lastTrigger > (timeSeconds*1000))) {
-    Serial.println("Motion stopped...");
-    digitalWrite(led, HIGH);
-    startTimer = false;
+  if(startTimer && (now - lastTrigger > (100))) {
+    lastTrigger = millis();
+    digitalWrite(led, ledState);
+    ledState = !ledState;
+    blinkCounter -= 1;
+    if (blinkCounter == 0){
+      startTimer = false;
+    }
   }
 }
