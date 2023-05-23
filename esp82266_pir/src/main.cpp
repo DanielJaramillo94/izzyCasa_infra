@@ -1,9 +1,12 @@
+
 #include <Arduino.h>
-#include "wifi.hpp"
-#include "mqtt.hpp"
 
 const int led = LED_BUILTIN;
 const int motionSensor = 14;
+#include "blink_led.hpp"
+
+#include "wifi.hpp"
+#include "mqtt.hpp"
 
 #include "movement_functions.hpp"
 
@@ -20,6 +23,6 @@ void setup() {
 }
 
 void loop() {
-  blinkLed();
+  handleBlinkLed();
   handleMqtt();
 }
