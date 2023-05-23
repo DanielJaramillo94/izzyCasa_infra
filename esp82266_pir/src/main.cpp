@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "wifi.hpp"
+#include "mqtt.hpp"
 
 const int led = LED_BUILTIN;
 const int motionSensor = 14;
@@ -15,8 +16,10 @@ void setup() {
   digitalWrite(led, HIGH);
 
   ConnectWiFi_STA();
+  InitMqtt();
 }
 
 void loop() {
   checkIfTurnOffLed();
+  handleMqtt();
 }
