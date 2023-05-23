@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "wifi.hpp"
 
 const int led = LED_BUILTIN;
 const int motionSensor = 14;
@@ -12,6 +13,8 @@ void setup() {
 
   pinMode(led, OUTPUT);
   digitalWrite(led, HIGH);
+
+  ConnectWiFi_STA();
 }
 
 void loop() {
