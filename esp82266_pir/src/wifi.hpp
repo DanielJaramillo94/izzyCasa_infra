@@ -9,7 +9,11 @@ void ConnectWiFi_STA() {
    WiFi.mode(WIFI_STA);
    WiFi.begin(ssid, password);
    while (WiFi.status() != WL_CONNECTED) { 
-     delay(100);  
+     digitalWrite(led, HIGH);
+     delay(50);  
+     digitalWrite(led, LOW);
+     delay(50);  
+     digitalWrite(led, HIGH);
      Serial.print('.'); 
    }
  
