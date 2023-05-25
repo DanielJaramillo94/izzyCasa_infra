@@ -1,0 +1,8 @@
+{
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.8",
+            "path": "C:\\Program Files (x86)\\Java\\jre1.8.0_361",
+        },
+    ]
+}
