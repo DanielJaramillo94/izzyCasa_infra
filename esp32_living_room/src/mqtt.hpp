@@ -1,10 +1,11 @@
 #include <PubSubClient.h>
 
 //const char* MQTT_BROKER_ADRESS = "*********";
-const char* MQTT_BROKER_ADRESS = "192.168.1.2";
+const char* MQTT_BROKER_ADRESS = "192.168.1.5";
 const uint16_t MQTT_PORT = 1883;
 const char* MQTT_CLIENT_NAME = "ESP32LivingRoom";
-const char* MQTT_TOPIC_NAME = "pir/balcony";
+const char* MQTT_TOPIC_PIR = "pir/balcony";
+const char* MQTT_TOPIC_SERVO = "servo/mainDoor";
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
@@ -22,7 +23,8 @@ void connect() {
     Serial.println("Connecting to MQTT broker...");
     if (mqttClient.connect(MQTT_CLIENT_NAME)) {
       Serial.println("Connected to MQTT broker");
-      mqttClient.subscribe(MQTT_TOPIC_NAME);
+      mqttClient.subscribe(MQTT_TOPIC_PIR);
+      mqttClient.subscribe(MQTT_TOPIC_SERVO);
     } else {
       Serial.println("Failed with state " + String(mqttClient.state()) + ", trying again in 2 seconds");
       delay(2000);
@@ -38,7 +40,16 @@ void OnMqttReceived(char* topic, byte* payload, unsigned int length) {
     content.concat((char)payload[i]);
   }
 
-  if (content.equals("1")) {
+  Serial.println(topic);
+  Serial.println("Mensaje de topico");
+  String topicString = topic;
+  if(topicString.equals("servo/mainDoor")){
+    if(content.equals("1")){
+      servo.write(90);
+    }else if(content.equals("0")){
+      servo.write(0);
+    }    
+  } else if(topicString.equals("pir/balcony") && content.equals("1")){
     startBlink(1);
   }
 }

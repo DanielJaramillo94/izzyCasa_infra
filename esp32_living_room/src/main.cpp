@@ -1,6 +1,9 @@
 
 #include <Arduino.h>
+#include "Keypad.h"
+#include <Servo.h>
 
+Servo servo;
 const int led = LED_BUILTIN;
 const byte ROWS = 4; //four rows
 const byte COLS = 4; //four columns
@@ -12,10 +15,10 @@ char keys[ROWS][COLS] = {
 };
 
 #include "blink_led.hpp"
-#include "Keypad.h"
-
 #include "wifi.hpp"
 #include "mqtt.hpp"
+
+#define servoPin 5
 
 byte rowPins[ROWS] = {13, 12, 14, 27}; 
 byte colPins[COLS] = {26, 25, 33};
@@ -39,10 +42,10 @@ void getCode(){
 void setup() {
   Serial.begin(115200);
   //attachInterrupt(digitalPinToInterrupt(motionSensor), detectsMovement, RISING);
-
   pinMode(led, OUTPUT);
+  servo.attach(servoPin);
+  servo.write(0);
   digitalWrite(led, LOW);
-
   ConnectWiFi_STA();
   InitMqtt();
 }
@@ -51,5 +54,4 @@ void loop() {
   handleBlinkLed();
   handleMqtt();
   getCode();
-  
 }
