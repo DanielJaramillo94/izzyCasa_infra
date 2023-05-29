@@ -1,12 +1,14 @@
 
 #include <Arduino.h>
 
+const int SECONDS_IN_MILLIS = 1000;
 const int led = LED_BUILTIN;
 const int motionSensor = 14;
 #include "blink_led.hpp"
 
 #include "wifi.hpp"
 #include "mqtt.hpp"
+#include "dht11.hpp"
 
 #include "movement_functions.hpp"
 
@@ -19,10 +21,13 @@ void setup() {
   digitalWrite(led, HIGH);
 
   ConnectWiFi_STA();
+  DTHsetup();
   InitMqtt();
 }
 
 void loop() {
-  handleBlinkLed();
+  unsigned long now = millis();
+  handleBlinkLed(now);
   handleMqtt();
+  DTHloop(now);
 }
