@@ -10,8 +10,7 @@ void startBlink(int blinks) {
   ledState = LOW;
 }
 
-void handleBlinkLed() {
-  unsigned long now = millis();
+void handleBlinkLed(unsigned long now) {
   if(startBlinking && (now - lastBlinkTrigger > (100))) {
     lastBlinkTrigger = millis();
     digitalWrite(led, ledState);

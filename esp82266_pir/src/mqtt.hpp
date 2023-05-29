@@ -1,6 +1,6 @@
 #include <PubSubClient.h>
 
-const char* MQTT_BROKER_ADRESS = "*********";
+const char* MQTT_BROKER_ADRESS = "192.168.1.5";
 const uint16_t MQTT_PORT = 1883;
 const char* MQTT_CLIENT_NAME = "ESP8266Client";
 const char* MQTT_TOPIC_NAME = "pir/balcony";
