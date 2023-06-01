@@ -3,6 +3,7 @@
 const int LED_ROOM_0 = 5;
 const int LED_ROOM_1 = 18;
 const int LED_ROOM_2 = 19;
+const int LED_ROOM_3 = 21;
 #include "blink_led.hpp"
 
 #include "wifi.hpp"
@@ -20,6 +21,9 @@ void setup() {
 
   pinMode(LED_ROOM_2, OUTPUT);
   digitalWrite(LED_ROOM_2, LOW);
+
+  pinMode(LED_ROOM_3, OUTPUT);
+  digitalWrite(LED_ROOM_3, LOW);
 
   ConnectWiFi_STA();
   InitMqtt();

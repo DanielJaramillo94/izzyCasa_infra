@@ -12,6 +12,7 @@ const char* MQTT_CLIENT_NAME = "ESP32Rooms";
 const char* MQTT_TOPIC_LIGHTS_ROOM_0 = "lights/room0";
 const char* MQTT_TOPIC_LIGHTS_ROOM_1 = "lights/room1";
 const char* MQTT_TOPIC_LIGHTS_ROOM_2 = "lights/room2";
+const char* MQTT_TOPIC_LIGHTS_ROOM_3 = "lights/room3";
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
@@ -32,6 +33,7 @@ void suscribe() {
   mqttClient.subscribe(MQTT_TOPIC_LIGHTS_ROOM_0);
   mqttClient.subscribe(MQTT_TOPIC_LIGHTS_ROOM_1);
   mqttClient.subscribe(MQTT_TOPIC_LIGHTS_ROOM_2);
+  mqttClient.subscribe(MQTT_TOPIC_LIGHTS_ROOM_3);
 }
 
 void connect() {

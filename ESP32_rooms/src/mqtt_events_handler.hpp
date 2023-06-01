@@ -1,11 +1,13 @@
 extern const int LED_ROOM_0;
 extern const int LED_ROOM_1;
 extern const int LED_ROOM_2;
+extern const int LED_ROOM_3;
 extern PubSubClient mqttClient;
 
 extern const char* MQTT_TOPIC_LIGHTS_ROOM_0;
 extern const char* MQTT_TOPIC_LIGHTS_ROOM_1;
 extern const char* MQTT_TOPIC_LIGHTS_ROOM_2;
+extern const char* MQTT_TOPIC_LIGHTS_ROOM_3;
 
 void handleMessage(int led_room, String message) {
   if (message.equals("1")) {
@@ -24,5 +26,8 @@ void handleEvent(String topic, String message) {
   }
   if (topic.equals(MQTT_TOPIC_LIGHTS_ROOM_2)) {
     handleMessage(LED_ROOM_2, message);
+  }
+  if (topic.equals(MQTT_TOPIC_LIGHTS_ROOM_3)) {
+    handleMessage(LED_ROOM_3, message);
   }
 }
